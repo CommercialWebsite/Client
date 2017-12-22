@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Pachimari Panier</title>
+    <% include ./partials/header %>
+</head>
+<body>
+
+<% include ./partials/navbar %>
+
+<div class="container">
+
+    <div class="row>">
+
+            <% if (typeof session.products !== 'undefined') { %>
+                <% session.products.forEach(function(product) { %>
+                    <div class="col-md-3 text-center" style="margin-bottom:50px;">
+                        <p><%= product.name %></p>
+                        <img src="<%= product.imageURL %>" style="height: 200px; width: 200px;">
+                        <h1 style="color:#ff9933"><%= product.price %>€</h1>
+                        Qty: <%= product.quantity%>
+                        Prix total: <%= product.quantity*product.price %>
+                        <form action="" id="addToCartForm">
+                            <input type="hidden" name="id" value="<%= product.id %>">
+                            <input type="hidden" name="name" value="<%= product.name %>">
+                            <input type="hidden" name="brand" value="<%= product.brand %>">
+                            <input type="hidden" name="typeId" value="<%= product.typeId %>">
+                            <input type="hidden" name="price" value="<%= product.price %>">
+                            <input type="hidden" name="imageURL" value="<%= product.imageURL %>">
+
+                        </form>
+                <!-- <button id="addToCart" class="btn btn-warning">Ajouter au panier</button> -->
+                    </div>
+                <% }); %>
+            <% } %>
+
+    </div>
+<form action="/orders" id="addToCartForm" method="post">
+    <div class="row">
+        <div class="col-md-12">
+            <button id="validateOrder" class="btn btn-warning"  >Valider la commande</button>
+        </div>
+    </div>
+</form>
+</div>
+
+<% include ./partials/footer %>
+
+</body>
+</html>

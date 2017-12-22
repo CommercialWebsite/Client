@@ -1,0 +1,89 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration utilisateur</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+<div class="col-sm-8 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span> Mon compte</h1>
+
+	
+	<form action="/profile" method="post">
+	    <% if (msgError.length > 0) { %>
+	        <div class="alert alert-danger"> <%= msgError %> </div>
+	    <% } %>
+		<% if (msgValidation.length > 0) { %>
+	        <div class="alert alert-success"> <%= msgValidation %> </div>
+	    <% } %>
+	<div class="form-group">
+			<label>Login</label>
+			<input type="text" class="form-control" name="username" value ="<%= user.login %>"  required>
+		</div>
+        <div class="form-group">
+            <label>Nom</label>
+            <input type="text" class="form-control" name="lastName" value ="<%= user.lastName %>" required>
+        </div>
+        <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" class="form-control" name="name" value ="<%= user.name %>"  required>
+        </div>
+        <div class="form-group">
+            <label>Mail</label>
+            <input type="text" class="form-control" name="mail" value ="<%= user.email %>"  required>
+        </div>
+		<div class="form-group">
+            <label>Adresse</label>
+            <input type="text" class="form-control" name="adresse"  value ="<%= user.addresse %>" required>
+        </div>
+		<div class="form-group">
+            <label>CP</label>
+            <input type="number" class="form-control" name="cp" value ="<%= user.cp %>" required>
+        </div>
+		<div class="form-group">
+            <label>Ville</label>
+            <input type="text" class="form-control" name="ville" value ="<%= user.ville %>" required>
+        </div>
+		<br>
+		 <input type="hidden" name="id" value="<%= user.id %>">	
+		
+		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
+	</form>	
+	
+	<h1><span class="fa fa-sign-in"></span> Modifier mon mot de passe</h1>
+
+	
+	<form action="/profile/updatePwd" method="post">
+	  
+	<div class="form-group">
+			<label>Ancien mot de passe</label>
+			<input type="password" class="form-control" name="oldPwd"  required>
+		</div>
+        <div class="form-group">
+            <label>Nouveau mot de passe</label>
+            <input type="password" class="form-control" name="pwd1" required>
+        </div>
+        <div class="form-group">
+            <label>Confirmer le mot de passe</label>
+            <input type="password" class="form-control" name="pwd2" required>
+        </div>
+
+		<br>
+		 <input type="hidden" name="id" value="<%= user.id %>">	
+		
+		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
+	</form>	
+</div>
+
+
+
+</div><br><br>
+	<% include ./partials/footer %>
+</body>
+</html>

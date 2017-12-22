@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Pachimari Accueil</title>
+    <% include ./partials/header %>
+	<script src="/js/filterProducts.js"></script>
+</head>
+<body>
+
+<% include ./partials/navbar %>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-offset-10 col-md-2">
+            <a href="/cart" class="btn btn-primary">Voir le panier <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+        </div>
+    </div>
+	</br>
+	<div class="row">
+		<div class="col-md-offset-8 col-md-1">
+			<input type="text" value='' name="name" id="name" placeholder="Nom" class="form-control modal-sm"/>
+			<input type="text" value='' name="brand" id="brand" placeholder="Marque" class="form-control modal-sm"/>
+			<select name = "typeId" id="typeId" class="form-control modal-sm" required>
+				<option value="any" name="typeId">Catégorie</option>
+				<%
+				if(listCat){
+					for (var i = 0; i<listCat.length; i++){
+				%>
+					<option value="<%=listCat[i].id%>" name="typeId"><%=listCat[i].name%></option>
+				<%
+				}}
+				%>
+			</select>
+		</div>
+	</div>
+
+    <div class="row>">
+        <div id="products" class="col-md-3 text-center">
+            <% products.forEach(function(product) { %>
+                <p><%= product.name %></p>
+                <img src="<%= product.imageURL %>" style="height: 200px; width: 200px;">
+				<h1 style="color:#ff9933"><%= product.price %>€</h1>
+                <form action="">
+                    <input type="hidden" name="id" value="<%= product.id %>">
+                    <input type="hidden" name="name" value="<%= product.name %>">
+                    <input type="hidden" name="brand" value="<%= product.brand %>">
+                    <input type="hidden" name="typeId" value="<%= product.typeId %>">
+                    <input type="hidden" name="price" value="<%= product.price %>">
+                    <input type="hidden" name="imageURL" value="<%= product.imageURL %>">
+					Qty:<input type="number" name="quantity" min=1 max=99 value=1>
+                    <button type="submit" class="btn btn-warning addToCart">Ajouter au panier</button>
+                </form></br>
+                <!-- <button id="addToCart" class="btn btn-warning">Ajouter au panier</button> -->
+            <% }); %>
+        </div>
+    </div>
+</div>
+</br></br>
+<% include ./partials/footer %>
+
+</body>
+</html>
+

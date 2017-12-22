@@ -1,0 +1,122 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration utilisateur</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+<div class="col-sm-6 col-sm-offset-3">
+
+	<h1><span class="fa fa-sign-in"></span> Ajouter un utilisateur</h1>
+
+	<!-- adduser FORM -->
+	<form action="/adminUser" method="post">
+	    <% if (msgError.length > 0) { %>
+	        <div class="alert alert-danger"> <%= msgError %> </div>
+	    <% } %>
+		<% if (msgValidation.length > 0) { %>
+	        <div class="alert alert-success"> <%= msgValidation %> </div>
+	    <% } %>
+		<div class="form-group">
+			<label>Login</label>
+			<input type="text" class="form-control" name="username" required>
+		</div>
+		<div class="form-group">
+			<label>Mot de passe</label>
+			<input type="password" class="form-control" name="password" required>
+		</div>
+        <div class="form-group">
+            <label>Confirmer le mot de passe</label>
+        	<input type="password" class="form-control" name="passwordConfirm" required>
+        </div>
+        <div class="form-group">
+            <label>Nom</label>
+            <input type="text" class="form-control" name="lastName" required>
+        </div>
+        <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="form-group">
+            <label>Mail</label>
+            <input type="text" class="form-control" name="mail" required>
+        </div>
+		<div class="form-group">
+            <label>Adresse</label>
+            <input type="text" class="form-control" name="adresse" required>
+        </div>
+		<div class="form-group">
+            <label>CP</label>
+            <input type="number" class="form-control" name="cp" required>
+        </div>
+		<div class="form-group">
+            <label>Ville</label>
+            <input type="text" class="form-control" name="ville" required>
+        </div>
+		<div class="form-group">
+            <label>Type</label>
+			<select name ="type" required>
+				<option name="type" value = "user">Utilisateur</option>
+				<option name="type" value = "admin">Administrateur</option>
+			</select>
+        </div>
+		<br>
+
+
+		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
+	</form>	
+</div>
+
+
+
+<div class="col-sm-8 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span>Liste des utilisateurs</h1>
+
+	<table class="table">
+		<tr>
+			<th>Login</th>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Mail</th>
+			<th>Adresse</th>
+			<th>type</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<%
+		if(listUser){
+			for (var i = 0; i<listUser.length; i++){
+		
+		%>
+		
+		<tr>
+			<td><%= listUser[i].login %></td>
+			<td><%= listUser[i].lastName %></td>
+			<td><%= listUser[i].name %></td>
+			<td><%= listUser[i].email %></td>
+			<td><%= listUser[i].addresse %>, <%= listUser[i].cp %> <%= listUser[i].ville %></td>	
+			<td><%= listUser[i].type %></td>	
+			<td><a href= "/adminUser/update/<%= listUser[i].login %>">Modifier</a></td>
+			<td><a href= "/adminUser/delete/<%= listUser[i].id %>/<%= listUser[i].login %>/">Supprimer</a></td>
+		</tr>
+		
+		<%
+		}}
+		%>
+	</table>
+
+	
+	
+</div>
+
+
+</div><br><br>
+	<% include ./partials/footer %>
+</body>
+</html>

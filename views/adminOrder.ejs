@@ -1,0 +1,84 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration Commande</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+
+<h1><span class="fa fa-sign-in"></span> Liste des Commandes</h1>
+
+
+<div class="col-sm-9 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span>Liste des Commandes</h1>
+
+	<table class="table">
+		<%
+		if(listOrder){
+			for (var i = 0; i<listOrder.length; i++){
+		
+		%>
+		
+		<tr>
+			<th colspan="4">Commande N° <%=listOrder[i].user.id%> / M. <%=listOrder[i].user.name%> <%=listOrder[i].user.lastName%> / Adresse : <%=listOrder[i].user.addresse%> <%=listOrder[i].user.cp%> <%=listOrder[i].user.ville%></th>
+		</tr>
+		<tr>
+			<th>Nom</th>
+			<th>Marque</th>
+			<th>Type</th>
+			<th>Prix</th>
+		<tr>
+		<% 
+			var total = 0; 
+			for(var j = 0; j<listOrder[i].items.length; j++){
+			total = total + listOrder[i].items[j].price;
+		%>
+		<tr>
+			<td><%= listOrder[i].items[j].name %></td>
+			<td><%= listOrder[i].items[j].brand %></td>
+			<td>
+			<%
+				var cat ="Aucune";
+				if(listCat){
+					for (var x = 0; x<listCat.length; x++){
+						if(listCat[x].id==listOrder[i].items[j].typeId){
+							cat=listCat[x].name 
+					
+						}
+
+					}
+				}
+				%>
+			<%= cat %>
+			</td>
+			<td><%= listOrder[i].items[j].price %></td>
+			
+
+			
+		</tr>
+		<%
+			}
+		%>
+		<tr>
+			<td colspan="3"></td>
+			<td > total : <%=total%></td>
+		</tr>
+		<%
+		}}
+		%>
+	</table>
+
+	
+	
+</div></div>
+
+<br><br>
+	<% include ./partials/footer %>
+</body>
+</html>

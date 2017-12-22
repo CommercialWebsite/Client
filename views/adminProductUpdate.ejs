@@ -1,0 +1,75 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration Produit</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+<div class="col-sm-8 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span> Modifier le produit <%= listProduct.name %></h1>
+
+	<!-- addProduct FORM -->
+	<form action="/adminProduct/update" method="post" enctype='multipart/form-data'>
+	    <% if (msgError.length > 0) { %>
+	        <div class="alert alert-danger"> <%= msgError %> </div>
+	    <% } %>
+		<% if (msgValidation.length > 0) { %>
+	        <div class="alert alert-success"> <%= msgValidation %> </div>
+	    <% } %>
+		<div class="form-group">
+			<label>Nom</label>
+			<input type="text" class="form-control" name="name" value="<%= listProduct.name %>" required>
+		</div>
+		<div class="form-group">
+			<label>Marque</label>
+			<input type="text" class="form-control" name="brand" value="<%= listProduct.brand %>" required>
+		</div>
+		<div class="form-group">
+			<label>Catégorie</label>
+			<select name = "typeId" required>
+				<option value="0" name="typeId">Aucune</option>
+				<%
+				if(listCat){
+					for (var i = 0; i<listCat.length; i++){
+				%>
+					<option value="<%=listCat[i].id%>" name="typeId" <% if(listCat[i].id == listProduct.typeId){ %> SELECTED = "SELECTED" <%} %> ><%=listCat[i].name%></option>
+				<%
+				}}
+				%>
+			</select>
+		
+		</div>
+        <div class="form-group">
+            <label>Prix</label>
+            <input type="number" step="any" min="0" class="form-control" name="price" value="<%= listProduct.price %>" required>
+        </div>
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="file" class="form-control" name="imageURL" value="<%= listProduct.imageURL %>" >
+            <img src="/<%= listProduct.imageURL %>" style=" max-width:600px;">
+        </div>
+		
+		
+		 <input type="hidden" name="nameOld" value="<%= listProduct.name %>">
+		 <input type="hidden" name="brandOld" value="<%= listProduct.brand %>">
+		 <input type="hidden" name="typeIdOld" value="<%= listProduct.typeId %>">
+		 <input type="hidden" name="priceOld" value="<%= listProduct.price %>">
+		 <input type="hidden" name="imageURLOld" value="<%= listProduct.imageURL %>">
+		 <input type="hidden" name="id" value="<%= listProduct.id %>">	
+
+		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
+	</form>	
+</div>
+
+
+
+</div><br><br>
+	<% include ./partials/footer %>
+</body>
+</html>

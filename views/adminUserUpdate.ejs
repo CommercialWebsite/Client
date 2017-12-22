@@ -1,0 +1,79 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration utilisateur</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+<div class="col-sm-8 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span> Modifier l'utilisateur <%= listUser.login %></h1>
+
+	<!-- addProduct FORM -->
+	<form action="/adminUser/update" method="post">
+	    <% if (msgError.length > 0) { %>
+	        <div class="alert alert-danger"> <%= msgError %> </div>
+	    <% } %>
+		<% if (msgValidation.length > 0) { %>
+	        <div class="alert alert-success"> <%= msgValidation %> </div>
+	    <% } %>
+	<div class="form-group">
+			<label>Login</label>
+			<input type="text" class="form-control" name="username" value ="<%= listUser.login %>"  required>
+		</div>
+        <div class="form-group">
+            <label>Nom</label>
+            <input type="text" class="form-control" name="lastName" value ="<%= listUser.lastName %>" required>
+        </div>
+        <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" class="form-control" name="name" value ="<%= listUser.name %>"  required>
+        </div>
+        <div class="form-group">
+            <label>Mail</label>
+            <input type="text" class="form-control" name="mail" value ="<%= listUser.email %>"  required>
+        </div>
+		<div class="form-group">
+            <label>Adresse</label>
+            <input type="text" class="form-control" name="adresse"  value ="<%= listUser.addresse %>" required>
+        </div>
+		<div class="form-group">
+            <label>CP</label>
+            <input type="number" class="form-control" name="cp" value ="<%= listUser.cp %>" required>
+        </div>
+		<div class="form-group">
+            <label>Ville</label>
+            <input type="text" class="form-control" name="ville" value ="<%= listUser.ville %>" required>
+        </div>
+		<div class="form-group">
+            <label>Type</label>
+		<select name ="type" required>
+			<option name="type" value = "user" <% if(listUser.type =="user") { %> SELECTED = "SELECTED" <% } %>   >Utilisateur</option>
+			<option name="type" value = "admin"  <% if(listUser.type =="admin") { %> SELECTED = "SELECTED" <% } %>>Administrateur</option>
+		</select>
+		</div>
+		<br>
+		 <input type="hidden" name="id" value="<%= listUser.id %>">	
+		 <input type="hidden" name="loginOld" value="<%= listUser.login %>">	
+
+		 
+		 
+		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
+	</form>	
+	
+	<br><br>
+	
+	<a href= "/adminUser/resetPdw/<%= listUser.login %>"><input type="button" class="btn btn-warning btn-lg" value = "Réinitialiser le mot de passe"></a>
+</div>
+
+
+
+</div><br><br>
+	<% include ./partials/footer %>
+</body>
+</html>

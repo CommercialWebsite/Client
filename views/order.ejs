@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Pachimari Orders</title>
+    <% include ./partials/header %>
+</head>
+<body>
+
+<% include ./partials/navbar %>
+
+<div class="container">
+
+    <div class="row>">
+
+        <% orders.forEach(function(order) { %>
+        <div class="col-md-12 text-center" style="margin-bottom:50px;">
+            <div>
+                <p>Order n° <%= order.id %></p>
+                <p><%= order.user.name+" "+order.user.lastName %></p>
+                <% order.items.forEach(function(item) { %>
+                    <p><%= item.name %></p>
+                <% }) %>
+                <p><%= order.amount %> €</p>
+            </div>
+        </div>
+        <% }) %>
+
+
+    </div>
+
+</div>
+
+<% include ./partials/footer %>
+
+</body>
+</html>

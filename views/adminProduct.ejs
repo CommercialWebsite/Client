@@ -1,0 +1,122 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title>Administration Produit</title>
+	<% include ./partials/header %>
+</head>
+<body>
+<% include ./partials/navbar %>
+<div class="container">
+
+
+<div class="col-sm-6 col-sm-offset-3">
+
+	<h1><span class="fa fa-sign-in"></span> Ajouter un produit</h1>
+
+	<!-- addProduct FORM -->
+	<form action="/adminProduct" method="post" enctype='multipart/form-data'>
+	    <% if (msgError.length > 0) { %>
+	        <div class="alert alert-danger"> <%= msgError %> </div>
+	    <% } %>
+		<% if (msgValidation.length > 0) { %>
+	        <div class="alert alert-success"> <%= msgValidation %> </div>
+	    <% } %>
+		<div class="form-group">
+			<label>Nom</label>
+			<input type="text" class="form-control" name="name" required>
+		</div>
+		<div class="form-group">
+			<label>Marque</label>
+			<input type="text" class="form-control" name="brand" required>
+		</div>
+		<div class="form-group">
+			<label>Catégorie </label>
+			<select name = "typeId" required>
+				<option value="0" name="typeId">Aucune</option>
+				<%
+				if(listCat){
+					for (var i = 0; i<listCat.length; i++){
+				%>
+					<option value="<%=listCat[i].id%>" name="typeId"><%=listCat[i].name%></option>
+				<%
+				}}
+				%>
+			</select>
+		</div>
+        <div class="form-group">
+            <label>Prix</label>
+            <input type="number" step="any" min="0" class="form-control" name="price" required>
+        </div>
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="file" class="form-control" name="imageURL" required>
+        </div>
+		
+
+
+		<button type="submit" class="btn btn-warning btn-lg">Valider</button>
+	</form>	
+</div>
+
+
+
+<div class="col-sm-8 col-sm-offset-1">
+
+	<h1><span class="fa fa-sign-in"></span>Liste des produits</h1>
+
+	<table class="table">
+		<tr>
+			<th>Nom</th>
+			<th>Marque</th>
+			<th>Type</th>
+			<th>Prix</th>
+			<th>Image</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<%
+		if(listProduct){
+			for (var i = 0; i<listProduct.length; i++){
+		
+		%>
+		
+		<tr>
+			<td><%= listProduct[i].name %></td>
+			<td><%= listProduct[i].brand %></td>
+			<td>
+			<%
+				var cat ="Aucune";
+				if(listCat){
+					for (var j = 0; j<listCat.length; j++){
+						if(listCat[j].id==listProduct[i].typeId){
+							cat=listCat[j].name 
+					
+						}
+
+					}
+				}
+				%>
+			<%= cat %>
+			</td>
+			<td><%= listProduct[i].price %></td>
+			<td>     <img src="/<%= listProduct[i].imageURL %>" width="50%" ></td>
+
+			<td><a href= "/adminProduct/update/<%= listProduct[i].id %>">Modifier</a></td>
+			<td><a href= "/adminProduct/delete/<%= listProduct[i].id %>">Supprimer</a></td>
+		</tr>
+		
+		<%
+		}}
+		%>
+	</table>
+
+	
+	
+</div>
+
+
+</div><br><br>
+	<% include ./partials/footer %>
+</body>
+</html>
